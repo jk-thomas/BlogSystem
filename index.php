@@ -1,15 +1,11 @@
 <?php
-// Work out the path to the database, so SQLite/PDO can connect
-// $root = __DIR__;
-// $database = $root . '/data/data.sqlite';
-// $dsn = 'sqlite:' . $database;
 
 require_once 'lib/common.php';
 
-// Connect to the database, run a query, handle errors
-// $pdo = new PDO($dsn);
+// Connect to the database
 $pdo = getPDO();
 
+// Run query
 $stmt = $pdo->query(
     'SELECT
         id, title, created_at, body
@@ -18,6 +14,7 @@ $stmt = $pdo->query(
     ORDER BY
         created_at DESC'
 );
+// Handle error
 if ($stmt === false)
 {
     throw new Exception('There was a problem running this query');
@@ -31,8 +28,6 @@ if ($stmt === false)
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     </head>
     <body>
-        <!-- <h1>Blog title</h1>
-        <p>This paragraph summarises what the blog is about.</p> -->
         <?php require 'templates/title.php' ?>
 
         <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
@@ -53,41 +48,3 @@ if ($stmt === false)
         <?php endwhile ?>
     </body>
 </html>
-
-<!--
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>A blog application</title>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    </head>
-    <body>
-        <h1>Blog title</h1>
-        <p>This paragraph summarises what the blog is about.</p>
-       
-	    <?php for ($postId = 1; $postId <= 3; $postId++): ?>
-            <h2>Article <?php echo $postId ?> title</h2>
-            <div>dd Mon YYYY</div>
-            <p>A paragraph summarising article <?php echo $postId ?>.</p>
-            <p>
-                <a href="#">Read more...</a>
-            </p>
-        <?php endfor ?>
-
-	<!-
-	<h2>Article 1 title</h2>
-        <div>dd Mon YYYY</div>
-        <p>A paragraph summarising article 1.</p>
-        <p>
-            <a href="#">Read more...</a>
-        </p>
-        <h2>Article 2 title</h2>
-        <div>dd Mon YYYY</div>
-        <p>A paragraph summarising article 2.</p>
-        <p>
-            <a href="#">Read more...</a>
-        </p>
-	v1->
-    </body>
-</html>
-v2-->

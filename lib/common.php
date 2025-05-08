@@ -35,7 +35,6 @@ function getPDO()
 {
     return new PDO(getDsn());
 }
-
 /**
  * Escapes HTML so it is safe to output
  *

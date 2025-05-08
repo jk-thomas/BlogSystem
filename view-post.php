@@ -1,8 +1,5 @@
 <?php
-// Work out the path to the database, so SQLite/PDO can connect
-// $root = __DIR__;
-// $database = $root . '/data/data.sqlite';
-// $dsn = 'sqlite:' . $database;
+
 require_once 'lib/common.php';
 
 // Get post ID
@@ -15,7 +12,6 @@ else
     $postId = 0;
 }
 // Connect to the database, run a query, handle errors
-// $pdo = new PDO($dsn);
 $pdo = getPDO();
 $stmt = $pdo->prepare(
     'SELECT
@@ -36,7 +32,7 @@ if ($result === false)
 {
     throw new Exception('There was a problem running this query');
 }
-// Let's get a row
+// Get row
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
@@ -50,8 +46,6 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     </head>
     <body>
-        <!-- <h1>Blog title</h1>
-        <p>This paragraph summarises what the blog is about.</p> -->
         <?php require 'templates/title.php' ?>
 
         <h2>
