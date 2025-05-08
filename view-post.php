@@ -1,10 +1,22 @@
 <?php
 // Work out the path to the database, so SQLite/PDO can connect
-$root = __DIR__;
-$database = $root . '/data/data.sqlite';
-$dsn = 'sqlite:' . $database;
+// $root = __DIR__;
+// $database = $root . '/data/data.sqlite';
+// $dsn = 'sqlite:' . $database;
+require_once 'lib/common.php';
+
+// Get post ID
+if (isset($_GET['post_id']))
+{
+    $postId = $_GET['post_id'];
+}
+else
+{
+    $postId = 0;
+}
 // Connect to the database, run a query, handle errors
-$pdo = new PDO($dsn);
+// $pdo = new PDO($dsn);
+$pdo = getPDO();
 $stmt = $pdo->prepare(
     'SELECT
         title, created_at, body
@@ -18,7 +30,7 @@ if ($stmt === false)
     throw new Exception('There was a problem preparing this query');
 }
 $result = $stmt->execute(
-    array('id' => 1, )
+    array('id' => $postId, )
 );
 if ($result === false)
 {
@@ -27,26 +39,29 @@ if ($result === false)
 // Let's get a row
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>
             A blog application |
-            <?php echo htmlspecialchars($row['title'], ENT_HTML5, 'UTF-8') ?>
+            <?php echo htmlEscape($row['title']) ?>
         </title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     </head>
     <body>
-        <h1>Blog title</h1>
-        <p>This paragraph summarises what the blog is about.</p>
+        <!-- <h1>Blog title</h1>
+        <p>This paragraph summarises what the blog is about.</p> -->
+        <?php require 'templates/title.php' ?>
+
         <h2>
-            <?php echo htmlspecialchars($row['title'], ENT_HTML5, 'UTF-8') ?>
+            <?php echo htmlEscape($row['title']) ?>
         </h2>
         <div>
             <?php echo $row['created_at'] ?>
         </div>
         <p>
-            <?php echo htmlspecialchars($row['body'], ENT_HTML5, 'UTF-8') ?>
+            <?php echo htmlEscape($row['body']) ?>
         </p>
     </body>
 </html>
