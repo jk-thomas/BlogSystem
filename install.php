@@ -26,6 +26,12 @@ function installBlog()
             );
         }
     }
+    // $sql = file_get_contents($root . '/data/init.sql');
+    // if ($sql === false) {
+    //     echo "<div style='background:#faa;padding:10px;'>Cannot read init.sql</div>";
+    // } else {
+    //     echo "<div style='background:#efe;border:1px solid #aaa;padding:10px;'><strong>Loaded SQL:</strong><pre>$sql</pre></div>";
+    // }
     // Grab the SQL commands to run on the database
     if (!$error)
     {
@@ -35,6 +41,9 @@ function installBlog()
             $error = 'Cannot find SQL file';
         }
     }
+    $sql = file_get_contents($root . '/data/init.sql');
+    echo "<pre style='background:#ddd;padding:10px'>SQL LOADED:<br>" . htmlentities($sql) . "</pre>";
+    
     // Connect to the new database and try to run the SQL commands
     if (!$error)
     {

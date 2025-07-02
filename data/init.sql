@@ -1,3 +1,4 @@
+-- TESTING 12345: init.sql was loaded
 /**
  * Database creation script
  */
@@ -7,7 +8,7 @@ CREATE TABLE post (
     title VARCHAR NOT NULL,
     body VARCHAR NOT NULL,
     user_id INTEGER NOT NULL,
-    created_at VARCHAR NOT NULL,
+    created_at TEXT NOT NULL,
     updated_at VARCHAR
 );
 INSERT INTO
@@ -16,11 +17,13 @@ INSERT INTO
         title, body, user_id, created_at
     )
     VALUES(
-        "Here's our first post",
-        "This is the body of the first post.
-It is split into paragraphs.",
+        'Here''s our first post',
+        'This is the body of the first post.
+It is split into paragraphs.',
         1,
-        date('now', '-2 months')
+        -- date('now', '-2 months')
+        -- '2025-06-01 12:34:56'
+        datetime('now', '-2 months', '-45 minutes', '+10 seconds')
     )
 ;
 INSERT INTO
@@ -33,7 +36,7 @@ INSERT INTO
         "This is the body of the second post.
 This is another paragraph.",
         1,
-        date('now', '-40 days')
+        datetime('now', '-40 days', '+81 minutes', '+37 seconds')
     )
 ;
 INSERT INTO
@@ -46,7 +49,7 @@ INSERT INTO
         "This is the body of the third post.
 This is split into paragraphs.",
         1,
-        date('now', '-13 days')
+        datetime('now', '-13 days', '+198 minutes', '+51 seconds')
     )
 ;
 
@@ -68,7 +71,7 @@ INSERT INTO
     )
     VALUES(
         1,
-        date('now', '-10 days'),
+        datetime('now', '-10 days', '+231 minutes', '+7 seconds'),
         'Jimmy',
         'http://example.com',
         "This is Jimmy's contribution"
@@ -82,7 +85,7 @@ INSERT INTO
     )
     VALUES(
         1,
-        date('now', '-8 days'),
+        datetime('now', '-8 days', '+549 minutes', '+32 seconds'),
         'Jonny',
         'http://anotherexample.com',
         "This is a comment from Jonny"

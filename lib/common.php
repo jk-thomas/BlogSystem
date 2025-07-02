@@ -48,14 +48,19 @@ function htmlEscape($html)
 
 function convertSqlDate($sqlDate)
 {
+    // echo "Raw date: " . $sqlDate . "<br>"; // Debug
     /* @var $date DateTime */
-    $date = DateTime::createFromFormat('Y-m-d', $sqlDate);
+    $date = DateTime::createFromFormat('Y-m-d H:i:s', $sqlDate);
 
-    return $date->format('d M Y');
+    if (!$date) {
+        return 'Invalid date';
+    }
+
+    return $date->format('d M Y, H:i');
 }
 
 /**
- * REturns the number of comments for the specified post
+ * Returns the number of comments for the specified post
  * 
  * @param integer $postId
  * @return integer
