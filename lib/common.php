@@ -59,6 +59,19 @@ function convertSqlDate($sqlDate)
     return $date->format('d M Y, H:i');
 }
 
+function redirectAndExit($script)
+{
+    // Get the domain-relative URL and work out the folder
+    $relativeUrl = $_SERVER['PHP_SELF'];
+    $urlFolder = substr($relativeUrl, 0, strrpos($relativeUrl, '/') + 1);
+
+    // Redirect the the full URL
+    $host = $_SERVER['HTTP_HOST'];
+    $fullUrl = 'http://' . $host . $urlFolder . $script;
+    header('Location: ' . $fullUrl);
+    exit();
+}
+
 /**
  * Returns the number of comments for the specified post
  * 

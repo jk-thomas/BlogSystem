@@ -43,7 +43,7 @@ function installBlog()
     }
     $sql = file_get_contents($root . '/data/init.sql');
     echo "<pre style='background:#ddd;padding:10px'>SQL LOADED:<br>" . htmlentities($sql) . "</pre>";
-    
+
     // Connect to the new database and try to run the SQL commands
     if (!$error)
     {
@@ -79,10 +79,11 @@ if ($_POST)
     // Install
     list($_SESSION['count'], $_SESSION['error']) = installBlog();
     // Redirect from POST to GET
-    $host = $_SERVER['HTTP_HOST'];
-    $script = $_SERVER['REQUEST_URI'];
-    header('Location: http://' . $host . $script);
-    exit();
+    // $host = $_SERVER['HTTP_HOST'];
+    // $script = $_SERVER['REQUEST_URI'];
+    // header('Location: http://' . $host . $script);
+    // exit();
+    redirectAndExit('install.php');
 }
 // Install checker
 $attempted = false;
