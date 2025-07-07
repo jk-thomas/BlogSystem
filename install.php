@@ -2,82 +2,18 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once 'lib/common.php';
+require_once 'lib/install.php';
 
-function installBlog()
-{
-    // Get the PDO DSN string
-    $root = getRootPath();
-    $database = getDatabasePath();
-    $error = '';
-    // A security measure, to avoid resetting the database if it exists
-    if (is_readable($database) && filesize($database) > 0)
-    {
-        $error = 'Please delete the existing database manually before installing it afresh';
-    }
-    // Create an empty file for the database
-    if (!$error)
-    {
-        $createdOk = @touch($database);
-        if (!$createdOk)
-        {
-            $error = sprintf(
-                'Could not create the database, please allow the server to create new files in \'%s\'',
-                dirname($database)
-            );
-        }
-    }
-    // $sql = file_get_contents($root . '/data/init.sql');
-    // if ($sql === false) {
-    //     echo "<div style='background:#faa;padding:10px;'>Cannot read init.sql</div>";
-    // } else {
-    //     echo "<div style='background:#efe;border:1px solid #aaa;padding:10px;'><strong>Loaded SQL:</strong><pre>$sql</pre></div>";
-    // }
-    // Grab the SQL commands to run on the database
-    if (!$error)
-    {
-        $sql = file_get_contents($root . '/data/init.sql');
-        if ($sql === false)
-        {
-            $error = 'Cannot find SQL file';
-        }
-    }
-    $sql = file_get_contents($root . '/data/init.sql');
-    echo "<pre style='background:#ddd;padding:10px'>SQL LOADED:<br>" . htmlentities($sql) . "</pre>";
-
-    // Connect to the new database and try to run the SQL commands
-    if (!$error)
-    {
-        $pdo = getPDO();
-        $result = $pdo->exec($sql);
-        if ($result === false)
-        {
-            $error = 'Could not run SQL: ' . print_r($pdo->errorInfo(), true);
-        }
-    }
-    // See how many rows created, if any
-    $count = array();
-    foreach(array('post', 'comment') as $tableName)
-    {
-        if (!$error)
-        {
-            $sql = "SELECT COUNT(*) AS c FROM " . $tableName;
-            $stmt = $pdo->query($sql);
-            if ($stmt)
-            {
-                // Store each count in an associative array
-                $count[$tableName] = $stmt->fetchColumn();
-            }
-        }
-    }
-    return array($count, $error);
-}
 // Store in session
 session_start();
+
 // Only run installer when responding to the form
 if ($_POST)
 {
     // Install
-    list($_SESSION['count'], $_SESSION['error']) = installBlog();
+    // list($_SESSION['count'], $_SESSION['error']) = installBlog();
+    $pdo = getPDO();
+    list($_SESSION['count'], $_SESSION['error']) = installBlog($pdo);
     // Redirect from POST to GET
     // $host = $_SERVER['HTTP_HOST'];
     // $script = $_SERVER['REQUEST_URI'];

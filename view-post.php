@@ -40,10 +40,17 @@ if ($_POST)
         redirectAndExit('view-post.php?post_id=' . $postId);
     }
 }
+else {
+    $commentData = array(
+        'name' => '',
+        'website' => '',
+        'text' => '',
+    );
+}
 
-// Swap carriage returns for paragraph breaks
-$bodyText = htmlEscape($row['body']);
-$paraText = str_replace("\n", "<p></p>", $bodyText);
+// // Swap carriage returns for paragraph breaks
+// $bodyText = htmlEscape($row['body']);
+// $paraText = str_replace("\n", "<p></p>", $bodyText);
 ?>
 
 <!DOCTYPE html>
@@ -64,10 +71,8 @@ $paraText = str_replace("\n", "<p></p>", $bodyText);
         <div>
             <?php echo convertSqlDate($row['created_at']) ?>
         </div>
-        <p>
-            <?php // Already escaped ?>
-            <?php echo $paraText ?>
-        </p>
+        <?php // Already escaped ?>
+        <?php echo convertNewLinesToParagraphs($row['body']) ?>
 
         <h3><?php echo countCommentsForPost($postId) ?> comments</h3>
 
@@ -82,7 +87,8 @@ $paraText = str_replace("\n", "<p></p>", $bodyText);
                     <?php echo convertSqlDate($comment['created_at']) ?>
                 </div>
                 <div class="comment-body">
-                    <?php echo htmlEscape($comment['text']) ?>
+                    <?php // Escaped ?>
+                    <?php echo convertNewLinesToParagraphs($comment['text']) ?>
                 </div>
             </div>
         <?php endforeach ?>

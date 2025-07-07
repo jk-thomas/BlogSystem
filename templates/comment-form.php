@@ -1,4 +1,11 @@
-<?php ?>
+<?php 
+/**
+ * @var $errors string
+ * @var $commentData array
+ */
+?>
+
+<?php // ?>
 <hr />
 
 <?php // Report errors in bp list ?>
@@ -23,6 +30,7 @@
             type="text"
             id="comment-name"
             name="comment-name"
+            value="<?php echo htmlEscape($commentData['name']) ?>"
         />
     </p>
     <p>
@@ -33,6 +41,7 @@
             type="text"
             id="comment-website"
             name="comment-website"
+            value="<?php echo htmlEscape($commentData['website']) ?>"
         />
     </p>
     <p>
@@ -44,7 +53,7 @@
             name="comment-text"
             rows="8"
             cols="70"
-        ></textarea>
+        ><?php echo htmlEscape($commentData['text']) ?></textarea>
     </p>
 
     <input type="submit" value="Submit comment" />

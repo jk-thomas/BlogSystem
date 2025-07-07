@@ -61,11 +61,11 @@ function addCommentToPost(PDO $pdo, $postId, array $commentData)
         if ($stmt === false) {
             throw new Exception('Cannot prepare statement to insert comment');
         }
-        $createdTimestamp = date('Y-m-d H:i:s');
+        // $createdTimestamp = date('Y-m-d H:i:s');
         $result = $stmt->execute(
             array_merge(
                 $commentData, 
-                array('post_id' => $postId, 'created_at' => $createdTimestamp, )
+                array('post_id' => $postId, 'created_at' => getSqlDateForNow(), )
             )
         );
 
