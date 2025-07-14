@@ -74,7 +74,7 @@ else {
         <?php // Already escaped ?>
         <?php echo convertNewLinesToParagraphs($row['body']) ?>
 
-        <h3><?php echo countCommentsForPost($postId) ?> comments</h3>
+        <h3><?php echo countCommentsForPost($postId) ?> comment(s)</h3>
 
         <?php foreach (getCommentsForPost($postId) as $comment) : ?>
             <?php // Horizontal rule-off to split ?>
