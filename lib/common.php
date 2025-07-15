@@ -135,3 +135,32 @@ function getCommentsForPost($postId)
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function tryLogin(PDO $pdo, $username, $password) {
+    $sql = "
+        SELECT password
+        FROM user
+        WHERE username = :username
+    ";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(
+        array('username' => $username, )
+    );
+
+    // Compare hash
+    $hash = $stmt->fetchColumn();
+    $success = password_verify($password, $hash);
+
+    return $success;
+}
+
+/** Logs the user in
+ * 
+ * For safety, regen cookies
+ * 
+ * @param string $username
+ */
+function login($username) {
+    session_regenerate_id();
+    $_SESSION['logged_in_username'] = $username;
+}
