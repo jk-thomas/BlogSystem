@@ -5,23 +5,19 @@
  * 
  * @return array(count array, error string)
  */
-function installBlog(PDO $pdo)
-{
+function installBlog(PDO $pdo) {
     // Get project paths
     $root = getRootPath();
     $database = getDatabasePath();
     $error = '';
     // A security measure, to avoid resetting the database if it exists
-    if (is_readable($database) && filesize($database) > 0)
-    {
+    if (is_readable($database) && filesize($database) > 0) {
         $error = 'Please delete the existing database manually before installing it afresh';
     }
     // Create an empty file for the database
-    if (!$error)
-    {
+    if (!$error) {
         $createdOk = @touch($database);
-        if (!$createdOk)
-        {
+        if (!$createdOk) {
             $error = sprintf(
                 'Could not create the database, please allow the server to create new files in \'%s\'',
                 dirname($database)
@@ -35,8 +31,7 @@ function installBlog(PDO $pdo)
     //     echo "<div style='background:#efe;border:1px solid #aaa;padding:10px;'><strong>Loaded SQL:</strong><pre>$sql</pre></div>";
     // }
     // Grab the SQL commands to run on the database
-    if (!$error)
-    {
+    if (!$error) {
         $sql = file_get_contents($root . '/data/init.sql');
         if ($sql === false)
         {
@@ -47,8 +42,7 @@ function installBlog(PDO $pdo)
     echo "<pre style='background:#ddd;padding:10px'>SQL LOADED:<br>" . htmlentities($sql) . "</pre>";
 
     // Connect to the new database and try to run the SQL commands
-    if (!$error)
-    {
+    if (!$error) {
         // $pdo = getPDO();
         $result = $pdo->exec($sql);
         if ($result === false)
@@ -58,14 +52,11 @@ function installBlog(PDO $pdo)
     }
     // See how many rows created, if any
     $count = array();
-    foreach(array('post', 'comment') as $tableName)
-    {
-        if (!$error)
-        {
+    foreach(array('post', 'comment') as $tableName) {
+        if (!$error) {
             $sql = "SELECT COUNT(*) AS c FROM " . $tableName;
             $stmt = $pdo->query($sql);
-            if ($stmt)
-            {
+            if ($stmt) {
                 // Store each count in an associative array
                 $count[$tableName] = $stmt->fetchColumn();
             }
@@ -80,7 +71,7 @@ function installBlog(PDO $pdo)
  * @param PDO $pdo
  * @param string $username
  * @param integer $length
- * @return array Duple of (password, error)
+ * @return array Tuple of (password, error)
  */
 function createUser(PDO $pdo, $username, $length = 10) {
     // Algo creates rand password

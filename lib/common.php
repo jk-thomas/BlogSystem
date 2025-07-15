@@ -4,8 +4,7 @@
  *
  * @return string
  */
-function getRootPath()
-{
+function getRootPath() {
     return realpath(__DIR__ . '/..');
 }
 /**
@@ -13,8 +12,7 @@ function getRootPath()
  *
  * @return string
  */
-function getDatabasePath()
-{
+function getDatabasePath() {
     return getRootPath() . '/data/data.sqlite';
 }
 /**
@@ -22,8 +20,7 @@ function getDatabasePath()
  *
  * @return string
  */
-function getDsn()
-{
+function getDsn() {
     return 'sqlite:' . getDatabasePath();
 }
 /**
@@ -31,8 +28,7 @@ function getDsn()
  *
  * @return \PDO
  */
-function getPDO()
-{
+function getPDO() {
     return new PDO(getDsn());
 }
 /**
@@ -41,13 +37,11 @@ function getPDO()
  * @param string $html
  * @return string
  */
-function htmlEscape($html)
-{
+function htmlEscape($html) {
     return htmlspecialchars($html, ENT_HTML5, 'UTF-8');
 }
 
-function convertSqlDate($sqlDate)
-{
+function convertSqlDate($sqlDate) {
     // echo "Raw date: " . $sqlDate . "<br>"; // Debug
     /* @var $date DateTime */
     $date = DateTime::createFromFormat('Y-m-d H:i:s', $sqlDate);
@@ -74,8 +68,7 @@ function convertNewLinesToParagraphs($text) {
     return '<p>' . str_replace("\n", "</p><p>", $escaped) . '</p>';
 }
 
-function redirectAndExit($script)
-{
+function redirectAndExit($script) {
     // Get the domain-relative URL and work out the folder
     $relativeUrl = $_SERVER['PHP_SELF'];
     $urlFolder = substr($relativeUrl, 0, strrpos($relativeUrl, '/') + 1);
@@ -93,8 +86,7 @@ function redirectAndExit($script)
  * @param integer $postId
  * @return integer
  */
-function countCommentsForPost($postId)
-{
+function countCommentsForPost($postId) {
     $pdo = getPDO();
     $sql = "
         SELECT
@@ -117,8 +109,7 @@ function countCommentsForPost($postId)
  * 
  * @param integer $postId
  */
-function getCommentsForPost($postId)
-{
+function getCommentsForPost($postId) {
     $pdo = getPDO();
     $sql = "
         SELECT
@@ -163,4 +154,8 @@ function tryLogin(PDO $pdo, $username, $password) {
 function login($username) {
     session_regenerate_id();
     $_SESSION['logged_in_username'] = $username;
+}
+
+function isLoggedIn() {
+    return isset($_SESSION['logged_in_username']);
 }

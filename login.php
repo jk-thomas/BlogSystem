@@ -7,11 +7,12 @@ if (version_compare(PHP_VERSION, '5.3.7') < 0) {
     );
 }
 
+session_start();
+
 // Handle form posting
 $username = '';
 if ($_POST) {
-    // Init session and database
-    session_start();
+    // Init database
     $pdo = getPDO();
 
     // Redirect only if password incorrect
@@ -23,6 +24,7 @@ if ($_POST) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>

@@ -3,13 +3,12 @@
 require_once 'lib/common.php';
 require_once 'lib/view-post.php';
 
+session_start();
+
 // Get post ID
-if (isset($_GET['post_id']))
-{
+if (isset($_GET['post_id'])) {
     $postId = (int) $_GET['post_id'];
-}
-else
-{
+} else {
     $postId = 0;
 }
 // Connect to the database, run a query, handle errors
@@ -22,8 +21,7 @@ if (!$row) {
 }
 
 $errors = null;
-if ($_POST)
-{
+if ($_POST) {
     $commentData = array(
         'name' => $_POST['comment-name'],
         'website' => $_POST['comment-website'],
@@ -39,8 +37,7 @@ if ($_POST)
     {
         redirectAndExit('view-post.php?post_id=' . $postId);
     }
-}
-else {
+} else {
     $commentData = array(
         'name' => '',
         'website' => '',

@@ -2,6 +2,8 @@
 
 require_once 'lib/common.php';
 
+session_start();
+
 // Connect to the database
 $pdo = getPDO();
 
@@ -15,8 +17,7 @@ $stmt = $pdo->query(
         created_at DESC'
 );
 // Handle error
-if ($stmt === false)
-{
+if ($stmt === false) {
     throw new Exception('There was a problem running this query');
 }
 
