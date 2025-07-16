@@ -57,7 +57,7 @@ if ($_POST) {
             A blog application |
             <?php echo htmlEscape($row['title']) ?>
         </title>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <?php require 'templates/head.php' ?>
     </head>
     <body>
         <?php require 'templates/title.php' ?>
