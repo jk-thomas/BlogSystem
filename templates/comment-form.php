@@ -5,9 +5,6 @@
  */
 ?>
 
-<?php // ?>
-<hr />
-
 <?php // Report errors in bp list ?>
 <?php if ($errors): ?>
     <div class="error box">

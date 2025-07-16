@@ -40,23 +40,28 @@ $notFound = isset($_GET['not_found']);
                 Error: cannot find the request blog post
             </div>
         <?php endif ?>
+        
+        <div class="post-list">
+            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                <div class="post-synopsis">
+                    <h2>
+                        <?php echo htmlEscape($row['title']) ?>
+                    </h2>
+                    <div class="meta">
+                        <?php echo convertSqlDate($row['created_at']) ?>
+                        (<?php echo countCommentsForPost($row['id']) ?> comment(s))
+                    </div>
+                    <p>
+                        <?php echo htmlEscape($row['body']) ?>
+                    </p>
+                    <div class="read-more">
+                        <a 
+                            href="view-post.php?post_id=<?php echo $row['id'] ?>"
+                        >Read more...</a>
+                    </div>
+                </div>
+            <?php endwhile ?>
+        </div>
 
-        <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
-            <h2>
-                <?php echo htmlEscape($row['title']) ?>
-            </h2>
-            <div>
-                <?php echo convertSqlDate($row['created_at']) ?>
-                (<?php echo countCommentsForPost($row['id']) ?> comment(s))
-            </div>
-            <p>
-                <?php echo htmlEscape($row['body']) ?>
-            </p>
-            <p>
-                <a 
-                    href="view-post.php?post_id=<?php echo $row['id'] ?>"
-                >Read more...</a>
-            </p>
-        <?php endwhile ?>
     </body>
 </html>
