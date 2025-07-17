@@ -83,11 +83,11 @@ function redirectAndExit($script) {
 /**
  * Returns the number of comments for the specified post
  * 
+ * @param PDO $pdo
  * @param integer $postId
  * @return integer
  */
-function countCommentsForPost($postId) {
-    $pdo = getPDO();
+function countCommentsForPost(PDO $pdo, $postId) {
     $sql = "
         SELECT
             COUNT(*) c
@@ -107,10 +107,11 @@ function countCommentsForPost($postId) {
 /**
  * Returns all the comments for the specified post
  * 
+ * @param PDO $pdo
  * @param integer $postId
+ * return array
  */
-function getCommentsForPost($postId) {
-    $pdo = getPDO();
+function getCommentsForPost(PDO $pdo, $postId) {
     $sql = "
         SELECT
             id, name, text, created_at, website

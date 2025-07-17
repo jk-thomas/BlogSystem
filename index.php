@@ -49,7 +49,7 @@ $notFound = isset($_GET['not_found']);
                     </h2>
                     <div class="meta">
                         <?php echo convertSqlDate($row['created_at']) ?>
-                        (<?php echo countCommentsForPost($row['id']) ?> comment(s))
+                        (<?php echo countCommentsForPost($pdo, $row['id']) ?> comment(s))
                     </div>
                     <p>
                         <?php echo htmlEscape($row['body']) ?>

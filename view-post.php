@@ -74,9 +74,9 @@ if ($_POST) {
         </div>
 
         <div class="comment-list">
-            <h3><?php echo countCommentsForPost($postId) ?> comment(s)</h3>
+            <h3><?php echo countCommentsForPost($pdo, $postId) ?> comment(s)</h3>
 
-            <?php foreach (getCommentsForPost($postId) as $comment) : ?>
+            <?php foreach (getCommentsForPost($pdo, $postId) as $comment) : ?>
                 <div class="comment">
                     <div class="comment-meta">
                         Comment from
