@@ -1,4 +1,4 @@
-/* Success / error mesage boxes */
+/* Success / error message boxes */
 .box {
     border: 1px dotted silver;
     border-radius: 5px;
@@ -69,11 +69,11 @@ body {
 .comment-margin {
     margin-bottom: 8px;
 }
-.comment-form input,
-.comment-form textarea {
+.user-form input,
+.user-form textarea {
     margin: 4px;
 }
-.comment-form label {
+.user-form label {
     font-size: 0.95em;
     margin: 6px;
     width: 7em;
@@ -81,6 +81,6 @@ body {
     float: left;
     text-align: right;
     /* Some browsers make labels too tall, and as a result they incorrectly stack horizontally.
-        Let's reset each to the left-hand side to be sure. */
+        Reset each to the left-hand side to be sure. */
     clear: left;
 }
