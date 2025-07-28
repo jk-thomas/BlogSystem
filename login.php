@@ -9,6 +9,10 @@ if (version_compare(PHP_VERSION, '5.3.7') < 0) {
 
 session_start();
 
+if (isLoggedIn()) {
+    redirectAndExit('index.php');
+}
+
 // Handle form posting
 $username = '';
 if ($_POST) {
