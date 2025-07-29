@@ -3,7 +3,7 @@ require_once 'lib/common.php';
 
 session_start();
 
-if (isLoggedIn()) {
+if (!isLoggedIn()) {
     redirectAndExit('index.php');
 }
 
