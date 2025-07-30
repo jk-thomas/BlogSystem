@@ -1,10 +1,23 @@
 <?php
 require_once 'lib/common.php';
+require_once 'lib/list-posts.php';
 
 session_start();
 
 if (!isLoggedIn()) {
     redirectAndExit('index.php');
+}
+
+if ($_POST) {
+    $deleteResponse = $_POST['delete-post'];
+    if ($deleteResponse) {
+        $keys = array_keys($deleteResponse);
+        $deletePostId = $keys[0];
+        if ($deletePostId) {
+            deletePost(getPDO(), $deletePostId);
+            redirectAndExit('list-posts.php');
+        }
+    }
 }
 
 // Connect to database, run query
@@ -22,6 +35,8 @@ $posts = getAllPosts($pdo);
         <?php require 'templates/top-menu.php' ?>
 
         <h1>Post list</h1>
+
+        <p>You have <?php echo count($posts) ?> posts.
 
         <form method="post">
             <table id="post-list">
