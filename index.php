@@ -6,20 +6,7 @@ session_start();
 
 // Connect to the database
 $pdo = getPDO();
-
-// Run query
-$stmt = $pdo->query(
-    'SELECT
-        id, title, created_at, body
-    FROM
-        post
-    ORDER BY
-        created_at DESC'
-);
-// Handle error
-if ($stmt === false) {
-    throw new Exception('There was a problem running this query');
-}
+$posts = getAllPosts($pdo);
 
 $notFound = isset($_GET['not_found']);
 
@@ -42,31 +29,31 @@ $notFound = isset($_GET['not_found']);
         <?php endif ?>
         
         <div class="post-list">
-            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+            <?php foreach ($posts as $post): ?>
                 <div class="post-synopsis">
                     <h2>
-                        <?php echo htmlEscape($row['title']) ?>
+                        <?php echo htmlEscape($post['title']) ?>
                     </h2>
                     <div class="meta">
-                        <?php echo convertSqlDate($row['created_at']) ?>
-                        (<?php echo countCommentsForPost($pdo, $row['id']) ?> comment(s))
+                        <?php echo convertSqlDate($post['created_at']) ?>
+                        (<?php echo countCommentsForPost($pdo, $post['id']) ?> comment(s))
                     </div>
                     <p>
-                        <?php echo htmlEscape($row['body']) ?>
+                        <?php echo htmlEscape($post['body']) ?>
                     </p>
                     <div class="post-controls">
                         <a 
-                            href="view-post.php?post_id=<?php echo $row['id'] ?>"
+                            href="view-post.php?post_id=<?php echo $post['id'] ?>"
                         >Read more...</a>
                         <?php if (isLoggedIn()): ?>
                             |
                             <a
-                                href="edit-post.php?post_id=<?php echo $row['id'] ?>"
+                                href="edit-post.php?post_id=<?php echo $post['id'] ?>"
                             >Edit</a>
                         <?php endif ?>
                     </div>
                 </div>
-            <?php endwhile ?>
+            <?php endforeach ?>
         </div>
 
     </body>

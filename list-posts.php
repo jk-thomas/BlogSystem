@@ -7,6 +7,10 @@ if (!isLoggedIn()) {
     redirectAndExit('index.php');
 }
 
+// Connect to database, run query
+$pdo = getPDO();
+$posts = getAllPosts($pdo);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,6 +29,9 @@ if (!isLoggedIn()) {
                     <tr>
                         <td>Title of the first post</td>
                         <td>
+                            dd MM YYYY h:mi
+                        </td>
+                        <td>
                             <a href="edit-post.php?post_id=1">Edit</a>
                         </td>
                         <td>
@@ -38,6 +45,9 @@ if (!isLoggedIn()) {
                     <tr>
                         <td>Title of the second post</td>
                         <td>
+                            dd MM YYYY h:mi
+                        </td>
+                        <td>
                             <a href="edit-post.php?post_id=2">Edit</a>
                         </td>
                         <td>
@@ -50,6 +60,9 @@ if (!isLoggedIn()) {
                     </tr>
                     <tr>
                         <td>Title of the third post</td>
+                        <td>
+                            dd MM YYYY h:mi
+                        </td>
                         <td>
                             <a href="edit-post.php?post_id=3">Edit</a>
                         </td>
