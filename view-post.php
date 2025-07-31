@@ -22,12 +22,25 @@ if (!$row) {
 
 $errors = null;
 if ($_POST) {
-    $commentData = array(
-        'name' => $_POST['comment-name'],
-        'website' => $_POST['comment-website'],
-        'text' => $_POST['comment-text'],
-    );
-    $errors = handleAddComment($pdo, $postId, $commentData);
+    switch ($_GET['action']) {
+        case 'add-comment':
+            $commentData = array(
+                'name' => $_POST['comment-name'],
+                'website' => $_POST['comment-website'],
+                'text' => $_POST['comment-text'],
+            );
+            $errors = handleAddComment($pdo, $postId, $commentData);
+            break;
+        case 'delete-comment':
+            if (isLoggedIn()) {
+                $deleteResponse = $_POST['delete-comment'];
+                $keys = array_keys($deleteResponse);
+                $deleteCommentId = $keys[0];
+                deleteComment($pdo, $postId, $deleteCommentId);
+                redirectAndExit('view-post.php?post_id=' . $postId);
+            }
+            break;
+    }
 } else {
     $commentData = array(
         'name' => '',
