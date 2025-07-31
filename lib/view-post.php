@@ -91,7 +91,8 @@ function deleteComment(PDO $pdo, $postId, $commentId) {
 function getPostRow(PDO $pdo, $postId) {
     $stmt = $pdo->prepare(
         'SELECT
-            title, created_at, body
+            title, created_at, body,
+            (SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id) comment_count
         FROM
             post
         WHERE

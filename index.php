@@ -36,7 +36,7 @@ $notFound = isset($_GET['not_found']);
                     </h2>
                     <div class="meta">
                         <?php echo convertSqlDate($post['created_at']) ?>
-                        (<?php echo countCommentsForPost($pdo, $post['id']) ?> comment(s))
+                        (<?php echo $post['comment_count'] ?> comment(s))
                     </div>
                     <p>
                         <?php echo htmlEscape($post['body']) ?>
