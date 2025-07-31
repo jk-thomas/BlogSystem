@@ -217,7 +217,8 @@ function getAllPosts(PDO $pdo) {
     // Run query
     $stmt = $pdo->query(
         'SELECT
-            id, title, created_at, body
+            id, title, created_at, body,
+            (SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id) comment_count
         FROM
             post
         ORDER BY
